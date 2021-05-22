@@ -1,10 +1,14 @@
 import React from 'react';
+import MainLayout from './layouts/MainLayout';
 
 function App(): JSX.Element {
   return (
-    <div>
-      Hi
-    </div>
+    <MainLayout>
+      {{
+        toolbar: <div />,
+        playground: <div />,
+      }}
+    </MainLayout>
   );
 }
 
