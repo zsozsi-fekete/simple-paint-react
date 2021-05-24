@@ -2,8 +2,8 @@ import { FC, useCallback } from 'react';
 import styled from 'styled-components';
 import { ShapeType } from '../models/shape';
 import { useAppDispatch, useAppSelector } from '../redux/hooks';
-import { selectSelectedShape } from '../redux/selectors';
-import { selectShape } from '../redux/slice';
+import { selectSelectedShapeType } from '../redux/selectors';
+import { selectShapeType } from '../redux/slice';
 
 const ToolbarItemContainer = styled.div<{ isSelected: boolean }>`
   height: 2rem;
@@ -18,11 +18,11 @@ const ToolbarItemContainer = styled.div<{ isSelected: boolean }>`
 
 const Toolbar: FC = () => {
   const dispatch = useAppDispatch();
-  const selectedShapeType = useAppSelector(selectSelectedShape);
+  const selectedShapeType = useAppSelector(selectSelectedShapeType);
 
   const click = useCallback(
     (shapeType: ShapeType) => {
-      dispatch(selectShape(shapeType));
+      dispatch(selectShapeType(shapeType));
     },
     [dispatch]
   );
