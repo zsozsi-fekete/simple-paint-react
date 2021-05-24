@@ -4,7 +4,7 @@ import { IDimensions } from '../models/shape';
 export interface IShapeProps extends IDimensions {
   id: string;
   creating?: boolean;
-  selected: boolean;
+  selected?: boolean;
 }
 
 export const Shape = styled.div.attrs<IShapeProps>(props => ({

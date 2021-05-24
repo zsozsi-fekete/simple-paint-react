@@ -2,7 +2,7 @@
 import React, { FC, useCallback, useContext, useEffect, useState } from 'react';
 import shortid from 'shortid';
 import styled from 'styled-components';
-import { defaultDimensions } from '../constants/constants';
+import { defaultDimensions, defaultShape } from '../constants/constants';
 import { IShape, ShapeType } from '../models/shape';
 import { EventListenerContext } from '../providers/EventListenerProvider';
 import { useAppDispatch, useAppSelector } from '../redux/hooks';
@@ -15,6 +15,7 @@ const PlaygroundContainer = styled.div`
   display: flex;
   height: 100%;
   position: relative;
+  cursor: crosshair;
 `;
 
 const Playground: FC = () => {
@@ -23,49 +24,30 @@ const Playground: FC = () => {
   const selectedShape = useAppSelector(selectSelectedShape);
   const dispatch = useAppDispatch();
   const eventListenerContext = useContext(EventListenerContext);
-  const [shape, setShape] = useState<IShape>({
-    id: '',
-    dimensions: defaultDimensions,
-    selected: false,
-    shapeType: selectedShapeType,
-  });
+  const [shape, setShape] = useState<IShape>(defaultShape);
 
   useEffect(
     () => {
       if (selectedShape) {
         setShape(selectedShape);
-      } else {
-        setShape({
-          id: '',
-          dimensions: defaultDimensions,
-          selected: false,
-          shapeType: selectedShapeType,
-        });
       }
     },
     [selectedShape]
   );
 
-  useEffect(
-    () => {
-      if (shape && !shape.id) {
-        setShape({ ...shape, shapeType: selectedShapeType });
+  const outline = useCallback(
+    (): JSX.Element => {
+      switch (shape.shapeType) {
+        case ShapeType.LINE:
+          return <Line id={shape.id} start={shape.dimensions.start} current={shape.dimensions.current} selected={!!shape.id} creating />;
+        case ShapeType.RECTANGLE:
+          return <Rectangle id={shape.id} start={shape.dimensions.start} current={shape.dimensions.current} selected={!!shape.id} creating />;
+        default:
+          return <div />;
       }
     },
-    [selectedShapeType]
+    [shape]
   );
-
-
-  const outline = (): JSX.Element => {
-    switch (shape.shapeType) {
-      case ShapeType.LINE:
-        return <Line id={shape.id} start={shape.dimensions.start} current={shape.dimensions.current} selected={shape.selected} creating />;
-      case ShapeType.RECTANGLE:
-        return <Rectangle id={shape.id} start={shape.dimensions.start} current={shape.dimensions.current} selected={shape.selected} creating />;
-      default:
-        return <div />;
-    }
-  };
 
   const onMove = useCallback(
     (event: MouseEvent) => {
@@ -76,32 +58,29 @@ const Playground: FC = () => {
 
   const mouseDown = (event: React.MouseEvent<HTMLDivElement>) => {
     if (selectedShape) return;
-    setShape(s => ({ ...s, id: shortid.generate(), dimensions: { start: { x: event.clientX, y: event.clientY }, current: { x: event.clientX, y: event.clientY } } }));
+    setShape(s => ({ id: shortid.generate(), dimensions: { start: { x: event.clientX, y: event.clientY }, current: { x: event.clientX, y: event.clientY } }, shapeType: selectedShapeType }));
     eventListenerContext.toggleEventListener(onMove, true);
   };
 
   const mouseUp = (event: React.MouseEvent<HTMLDivElement>) => {
     if (selectedShape) return;
     eventListenerContext.toggleEventListener(onMove, false);
-    const shp = { ...shape };
-    dispatch(addShape(shp));
-    setShape({
-      id: '',
-      dimensions: defaultDimensions,
-      selected: false,
-      shapeType: selectedShapeType,
-    });
+    dispatch(addShape(shape));
+    setShape(defaultShape);
   };
 
   const click = (event: React.MouseEvent<HTMLDivElement>) => {
-    dispatch(deselectShape(shape));
+    if (selectedShape) {
+      dispatch(deselectShape(shape));
+      setShape(defaultShape);
+    }
   };
 
   return (
     <PlaygroundContainer onClick={click} onMouseDown={mouseDown} onMouseUp={mouseUp}>
       {shapes.map(s => s.shapeType === ShapeType.LINE ?
-        <Line key={s.id} id={s.id} start={s.dimensions.start} current={s.dimensions.current} selected={s.selected} /> :
-        <Rectangle key={s.id} id={s.id} start={s.dimensions.start} current={s.dimensions.current} selected={s.selected} />)}
+        <Line key={s.id} id={s.id} start={s.dimensions.start} current={s.dimensions.current} /> :
+        <Rectangle key={s.id} id={s.id} start={s.dimensions.start} current={s.dimensions.current} />)}
       {!!shape.id && outline()}
     </PlaygroundContainer>
   );

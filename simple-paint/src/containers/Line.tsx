@@ -44,7 +44,7 @@ const Line: FC<IShapeProps> = (props) => {
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const mouseUp = (event: React.MouseEvent<HTMLDivElement>) => {
-    if (!creating || selected) {
+    if (!creating) {
       event.stopPropagation();
     }
   };

@@ -14,5 +14,4 @@ export interface IShape {
   id: string;
   dimensions: IDimensions;
   shapeType: ShapeType;
-  selected: boolean;
 }

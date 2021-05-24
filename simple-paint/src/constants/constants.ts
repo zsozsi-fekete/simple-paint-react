@@ -14,3 +14,8 @@ export const defaultDimensions = {
   },
 };
 export const defaultShapeType = ShapeType.LINE;
+export const defaultShape = {
+  id: '',
+  dimensions: defaultDimensions,
+  shapeType: defaultShapeType,
+};
