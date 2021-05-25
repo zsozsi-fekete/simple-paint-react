@@ -6,7 +6,8 @@ import MainLayout from './layouts/MainLayout';
 import EventListenerProvider from './providers/EventListenerProvider';
 import { store } from './redux/store';
 
-function App(): JSX.Element {
+const App = (): JSX.Element => {
+  document.addEventListener('contextmenu', (event: MouseEvent) => event.preventDefault());
   return (
     <Provider store={store}>
       <EventListenerProvider>
@@ -19,6 +20,6 @@ function App(): JSX.Element {
       </EventListenerProvider>
     </Provider>
   );
-}
+};
 
 export default App;

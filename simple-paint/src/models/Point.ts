@@ -26,6 +26,4 @@ export class Point implements IPoint {
   private getDirectionalVector = (point: IPoint): IPoint => ({ x: point.x - this.x, y: point.y - this.y });
 
   getMagnitude = (point: IPoint): number => Math.sqrt((point.x - this.x) ** 2 + (point.y - this.y) ** 2);
-
-  static getMidPoint = (point1: IPoint, point2: IPoint): IPoint => ({ x: Math.abs(point1.x + point2.x) / 2, y: Math.abs(point1.y + point2.y) / 2 });
 }

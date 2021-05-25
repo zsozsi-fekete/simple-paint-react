@@ -15,8 +15,8 @@ interface IShpPrps {
 }
 
 export const Shape = styled.div.attrs<IShapeProps>(({ selected, creating }) => ({
-  border: `${!creating && !selected ? '1px solid #341f97' : '3px dashed #c8d6e5'}`,
-  backgroundColor: `${!creating && !selected && '#54a0ff'}`,
+  border: `${!creating && !selected ? '1px solid #10ac84' : '3px dashed #c8d6e5'}`,
+  backgroundColor: `${!creating && !selected && '#1dd1a1'}`,
 })) <IShpPrps>`
   border: ${props => props.border};
   background-color: ${props => props.backgroundColor};
