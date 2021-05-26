@@ -47,6 +47,8 @@ export const useShapeDragging = (state: IShape, setShape: (value: React.SetState
 
   const dragDown = (event: React.MouseEvent<HTMLDivElement>) => {
     event.stopPropagation();
+    event.preventDefault();
+
     if (dragging) return;
 
     setDragging(true);
@@ -56,6 +58,8 @@ export const useShapeDragging = (state: IShape, setShape: (value: React.SetState
 
   const dragUp = (event: React.MouseEvent<HTMLDivElement>) => {
     event.stopPropagation();
+    event.preventDefault();
+
     if (!dragging) return;
 
     dispatch(updateSelectedShape(state));

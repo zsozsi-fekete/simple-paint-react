@@ -37,8 +37,10 @@ export const useShapeCreating = (shape: IShape, setShape: (value: React.SetState
 
   const createDown = (event: React.MouseEvent<HTMLDivElement>) => {
     event.stopPropagation();
+    event.preventDefault();
 
     if (selectedShape || creating) return;
+
     setCreating(true);
     setShape(
       {
@@ -52,8 +54,10 @@ export const useShapeCreating = (shape: IShape, setShape: (value: React.SetState
 
   const createUp = (event: React.MouseEvent<HTMLDivElement>) => {
     event.stopPropagation();
+    event.preventDefault();
 
     if (selectedShape || !creating) return;
+
     eventListenerContext.toggleEventListener(onMove, false);
     dispatch(addShape(shape));
     setCreating(false);

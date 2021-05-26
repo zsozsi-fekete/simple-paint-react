@@ -32,16 +32,21 @@ const ShapeContainer: FC<IShapeContainerProps> = (props) => {
 
   const click = (event: React.MouseEvent<HTMLDivElement>) => {
     event.stopPropagation();
+    event.preventDefault();
 
     if (!selected) dispatch(selectShape(id));
   };
 
   const onMouseDown = (event: React.MouseEvent<HTMLDivElement>) => {
     event.stopPropagation();
+    event.preventDefault();
+
     if (selected) dispatch(deselectShape());
   };
 
   const onMouseUp = (event: React.MouseEvent<HTMLDivElement>) => {
+    event.preventDefault();
+
     if (!creating) event.stopPropagation();
   };
 

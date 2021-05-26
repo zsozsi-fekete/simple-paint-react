@@ -46,6 +46,8 @@ export const useShapeResizing = (shape: IShape, setShape: (value: React.SetState
 
   const resizeDown = (event: React.MouseEvent<HTMLDivElement>, dir: Direction) => {
     event.stopPropagation();
+    event.preventDefault();
+
     if (resizing) return;
 
     setResizing(true);
@@ -55,6 +57,8 @@ export const useShapeResizing = (shape: IShape, setShape: (value: React.SetState
 
   const resizeUp = (event: React.MouseEvent<HTMLDivElement>) => {
     event.stopPropagation();
+    event.preventDefault();
+
     if (!resizing) return;
 
     setResizing(false);

@@ -14,6 +14,24 @@ const initialState: IRootState = {
   shapes: [],
 };
 
+const swapRectangleCorners = (shape: IShape): IShape => {
+  const { dimensions: { start, current }, shapeType } = shape;
+  if (shapeType !== ShapeType.RECTANGLE) return shape;
+  return {
+    ...shape,
+    dimensions: {
+      start: {
+        x: current.x < start.x ? current.x : start.x,
+        y: current.y < start.y ? current.y : start.y,
+      },
+      current: {
+        x: current.x >= start.x ? current.x : start.x,
+        y: current.y >= start.y ? current.y : start.y,
+      }
+    }
+  };
+};
+
 const slice = createSlice({
   name: 'root',
   initialState,
@@ -22,7 +40,7 @@ const slice = createSlice({
       state.selectedShapeType = action.payload;
     },
     addShape: (state, action: PayloadAction<IShape>) => {
-      state.shapes.push(action.payload);
+      state.shapes.push(swapRectangleCorners(action.payload));
       state.selectedShape = undefined;
     },
     selectShape: (state, action: PayloadAction<string>) => {
@@ -42,7 +60,7 @@ const slice = createSlice({
       state.selectedShape = undefined;
     },
     updateSelectedShape: (state, action: PayloadAction<IShape>) => {
-      state.selectedShape = action.payload;
+      state.selectedShape = swapRectangleCorners(action.payload);
     },
   }
 });
