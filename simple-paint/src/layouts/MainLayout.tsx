@@ -13,11 +13,17 @@ const MainContainer = styled.div`
   display: flex;
   flex-direction: row;
   height: 100vh;
+  overflow: hidden;
 `;
+
 const ToolbarContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
   background-color: #576574;
   width: ${toolbarWidth};
 `;
+
 const PlaygroundContainer = styled.div`
   background-color: #222f3e;
   flex: 1;

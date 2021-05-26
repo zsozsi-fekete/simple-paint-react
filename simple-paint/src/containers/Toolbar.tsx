@@ -1,4 +1,4 @@
-import { faSlash, faSquare } from '@fortawesome/free-solid-svg-icons';
+import { faInfoCircle, faSlash, faSquare } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { FC, useCallback } from 'react';
 import styled from 'styled-components';
@@ -7,6 +7,39 @@ import { ShapeType } from '../models/shape';
 import { useAppDispatch, useAppSelector } from '../redux/hooks';
 import { selectSelectedShapeType } from '../redux/selectors';
 import { selectShapeType } from '../redux/slice';
+
+const InfoContainer = styled.div`
+  position: relative;
+  margin-top: auto;
+  background-color: white;
+  height: 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+const InfoContentContainer = styled.div`
+  visibility: hidden;
+  ${InfoContainer}:hover & {
+      visibility: visible;
+  }
+  background-color: whitesmoke;
+  position: absolute;
+  bottom: 0px;
+  left: 80px;
+  width: max-content;
+  padding: 10px 15px 10px 25px;
+  z-index: 1;
+`;
+
+const UList = styled.ul`
+  margin: 0px 0px 0px 10px;
+  padding-left: 4px;
+`;
+
+const ListItem = styled.li`
+  font-size: x-large;
+`;
 
 const ToolbarItemContainer = styled.div<{ isSelected: boolean }>`
   height: 2rem;
@@ -49,6 +82,27 @@ const Toolbar: FC = () => {
           }
         </ToolbarItemContainer>
       )}
+      <InfoContainer>
+        <FontAwesomeIcon icon={faInfoCircle} style={iconStyle} />
+        <InfoContentContainer>
+          <UList>
+            <ListItem>Click and Drag to create</ListItem>
+            <ListItem>Click to select</ListItem>
+            <ListItem>On selected:</ListItem>
+            <UList>
+              <ListItem>Middle Point to drag</ListItem>
+              <ListItem>Corner Points to resize</ListItem>
+              <ListItem>Delete key to delete</ListItem>
+              <ListItem>To deselect: </ListItem>
+              <UList>
+                <ListItem>Click on it</ListItem>
+                <ListItem>Right Click</ListItem>
+                <ListItem>Escape key</ListItem>
+              </UList>
+            </UList>
+          </UList>
+        </InfoContentContainer>
+      </InfoContainer>
     </>
   );
 };
