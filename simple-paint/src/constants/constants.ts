@@ -1,6 +1,5 @@
 import { ShapeType } from '../models/shape';
 
-export const borderWidth = 3;
 export const lineHeight = 3;
 export const toolbarWidth = 70;
 export const defaultPoint = {

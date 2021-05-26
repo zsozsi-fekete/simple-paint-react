@@ -2,25 +2,26 @@ import { useCallback, useEffect } from 'react';
 import { useAppDispatch } from '../redux/hooks';
 import { deselectShape } from '../redux/slice';
 
-export const useShapeDeselect = (selected: boolean | undefined, creating: boolean | undefined, resizing: boolean | undefined): void => {
+export const useShapeDeselect = (selected: boolean | undefined, creating: boolean | undefined, dragging: boolean | undefined, resizing: boolean | undefined): void => {
   const dispatch = useAppDispatch();
 
   const rightClick = useCallback(
     (ev: MouseEvent) => {
+      ev.stopImmediatePropagation();
       ev.preventDefault();
-      if (!selected || creating || resizing) return;
+      if (!selected) return;
       dispatch(deselectShape());
     },
-    [dispatch, selected, creating]
+    [dispatch, selected]
   );
 
   useEffect(
     () => {
-      if (selected && !creating) document.addEventListener('contextmenu', rightClick);
+      if (selected && !creating && !dragging && !resizing) document.addEventListener('contextmenu', rightClick);
       return () => {
         document.removeEventListener('contextmenu', rightClick);
       };
     },
-    [selected, creating]
+    [selected, creating, dragging, resizing]
   );
 };

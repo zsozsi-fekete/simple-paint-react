@@ -14,10 +14,10 @@ export const useShapeCreating = (shape: IShape, setShape: (value: React.SetState
     createUp: (event: React.MouseEvent<HTMLDivElement>) => void,
   ] => {
   const [creating, setCreating] = useState(false);
+  const selectedShape = useAppSelector(selectSelectedShape);
   const selectedShapeType = useAppSelector(selectSelectedShapeType);
   const eventListenerContext = useContext(EventListenerContext);
   const dispatch = useAppDispatch();
-  const selectedShape = useAppSelector(selectSelectedShape);
 
   useEffect(
     () => {
@@ -39,7 +39,7 @@ export const useShapeCreating = (shape: IShape, setShape: (value: React.SetState
     event.stopPropagation();
     event.preventDefault();
 
-    if (selectedShape || creating) return;
+    if (event.button !== 0 || selectedShape || creating) return;
 
     setCreating(true);
     setShape(
@@ -56,12 +56,12 @@ export const useShapeCreating = (shape: IShape, setShape: (value: React.SetState
     event.stopPropagation();
     event.preventDefault();
 
-    if (selectedShape || !creating) return;
+    if (event.button !== 0 || selectedShape || !creating) return;
 
-    eventListenerContext.toggleEventListener(onMove, false);
     dispatch(addShape(shape));
     setCreating(false);
     setShape(defaultShape);
+    eventListenerContext.toggleEventListener(onMove, false);
   };
 
   return [creating, createDown, createUp];

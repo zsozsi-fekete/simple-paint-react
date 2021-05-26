@@ -61,8 +61,8 @@ export const useShapeResizing = (shape: IShape, setShape: (value: React.SetState
 
     if (!resizing) return;
 
-    setResizing(false);
     dispatch(updateSelectedShape(shape));
+    setResizing(false);
     eventListenerContext.toggleEventListener(onResize, false);
   };
 

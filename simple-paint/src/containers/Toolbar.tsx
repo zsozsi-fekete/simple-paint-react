@@ -1,12 +1,12 @@
+import { faSlash, faSquare } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { FC, useCallback } from 'react';
 import styled from 'styled-components';
-import { faSlash, faSquare } from '@fortawesome/free-solid-svg-icons';
+import { toolbarWidth } from '../constants/constants';
 import { ShapeType } from '../models/shape';
 import { useAppDispatch, useAppSelector } from '../redux/hooks';
 import { selectSelectedShapeType } from '../redux/selectors';
 import { selectShapeType } from '../redux/slice';
-import { toolbarWidth } from '../constants/constants';
 
 const ToolbarItemContainer = styled.div<{ isSelected: boolean }>`
   height: 2rem;

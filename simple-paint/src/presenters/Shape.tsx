@@ -11,7 +11,6 @@ export interface IShapeProps extends IDimensions {
 interface IShpPrps {
   border?: string;
   backgroundColor?: string,
-
 }
 
 export const Shape = styled.div.attrs<IShapeProps>(({ selected, creating }) => ({

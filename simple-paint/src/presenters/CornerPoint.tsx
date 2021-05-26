@@ -30,8 +30,6 @@ export const CornerPoint = styled.div.attrs<{ direction: Direction }>(({ directi
   },
 })) <{ direction: Direction }>`
   position: absolute;
-  bottom: -5px;
-  right: -5px;
   height: ${midPointSize}px;
   width: ${midPointSize}px;
   background-color: #bbb;

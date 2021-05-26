@@ -15,8 +15,8 @@ export const useShapeDragging = (state: IShape, setShape: (value: React.SetState
   ] => {
   const [dragging, setDragging] = useState(false);
   const [start, setStart] = useState<IPoint>(defaultPoint);
-  const eventListenerContext = useContext(EventListenerContext);
   const selectedShape = useAppSelector(selectSelectedShape);
+  const eventListenerContext = useContext(EventListenerContext);
   const dispatch = useAppDispatch();
 
   const startRef = useRef(start);
@@ -40,7 +40,14 @@ export const useShapeDragging = (state: IShape, setShape: (value: React.SetState
       const { x, y } = startRef.current;
       const offsetX = event.clientX - x;
       const offsetY = event.clientY - y;
-      setShape(s => ({ ...s, dimensions: { start: { x: selectedShape.dimensions.start.x + offsetX, y: selectedShape.dimensions.start.y + offsetY }, current: { x: selectedShape.dimensions.current.x + offsetX, y: selectedShape.dimensions.current.y + offsetY } } }));
+      setShape(s => (
+        {
+          ...s,
+          dimensions: {
+            start: { x: selectedShape.dimensions.start.x + offsetX, y: selectedShape.dimensions.start.y + offsetY },
+            current: { x: selectedShape.dimensions.current.x + offsetX, y: selectedShape.dimensions.current.y + offsetY }
+          }
+        }));
     },
     [selectedShape, startRef]
   );

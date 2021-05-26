@@ -19,6 +19,7 @@ const Playground: FC = () => {
   const [shape, setShape] = useState<IShape>(defaultShape);
   const [creating, createDown, createUp] = useShapeCreating(shape, setShape);
   const selectedShape = useAppSelector(selectSelectedShape);
+
   useEffect(
     () => {
       if (selectedShape) {

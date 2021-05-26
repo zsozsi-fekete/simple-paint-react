@@ -1,5 +1,6 @@
 import React, { FC } from 'react';
-import { useShapeDelete } from '../hooks/useShapeDelete';
+import { useKeyboardEvents } from '../hooks/useKeyboardEvents';
+import { useShapeDeselect } from '../hooks/useShapeDeselect';
 import { useShapeDragging } from '../hooks/useShapeDragging';
 import { useShapeResizing } from '../hooks/useShapeResizing';
 import { Point } from '../models/Point';
@@ -10,7 +11,6 @@ import { MidPoint } from '../presenters/MidPoint';
 import { Rectangle } from '../presenters/Rectangle';
 import { useAppDispatch } from '../redux/hooks';
 import { deselectShape, selectShape } from '../redux/slice';
-
 
 export interface IShapeContainerProps extends IDimensions {
   id: string;
@@ -23,12 +23,12 @@ export interface IShapeContainerProps extends IDimensions {
 
 const ShapeContainer: FC<IShapeContainerProps> = (props) => {
   const { id, shapeType, start, current, selected, creating, shape, setShape } = props;
+  const [dragging, dragDown, dragUp] = useShapeDragging(shape, setShape);
+  const [resizing, resizeDown, resizeUp] = useShapeResizing(shape, setShape);
+  useKeyboardEvents(selected, creating);
+  useShapeDeselect(selected, creating, dragging, resizing);
   const dispatch = useAppDispatch();
   const point = new Point(start.x, start.y);
-  const [dragging, dragDown, dragUp] = useShapeDragging(shape, setShape);
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [resizing, resizeDown, resizeUp] = useShapeResizing(shape, setShape);
-  useShapeDelete(selected, creating);
 
   const click = (event: React.MouseEvent<HTMLDivElement>) => {
     event.stopPropagation();
