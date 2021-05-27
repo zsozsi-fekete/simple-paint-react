@@ -5,6 +5,7 @@ import { useShapeDragging } from '../hooks/useShapeDragging';
 import { useShapeResizing } from '../hooks/useShapeResizing';
 import { Point } from '../models/Point';
 import { IDimensions, IShape, ShapeType } from '../models/shape';
+import { Circle } from '../presenters/Circle';
 import { CornerPoint, Direction } from '../presenters/CornerPoint';
 import { Line } from '../presenters/Line';
 import { MidPoint } from '../presenters/MidPoint';
@@ -58,7 +59,7 @@ const ShapeContainer: FC<IShapeContainerProps> = (props) => {
       />
       <CornerPoint direction={Direction.TOP_LEFT} onMouseDown={(event) => resizeDown(event, Direction.TOP_LEFT)} onMouseUp={resizeUp} />
       <CornerPoint direction={Direction.BOTTOM_RIGHT} onMouseDown={(event) => resizeDown(event, Direction.BOTTOM_RIGHT)} onMouseUp={resizeUp} />
-      {shapeType === ShapeType.RECTANGLE &&
+      {(shapeType === ShapeType.RECTANGLE || shapeType === ShapeType.CIRCLE) &&
         <>
           <CornerPoint direction={Direction.TOP_RIGHT} onMouseDown={(event) => resizeDown(event, Direction.TOP_RIGHT)} onMouseUp={resizeUp} />
           <CornerPoint direction={Direction.BOTTOM_LEFT} onMouseDown={(event) => resizeDown(event, Direction.BOTTOM_LEFT)} onMouseUp={resizeUp} />
@@ -101,6 +102,22 @@ const ShapeContainer: FC<IShapeContainerProps> = (props) => {
         >
           {children}
         </Rectangle>,
+      [ShapeType.CIRCLE]:
+        <Circle
+          id={id}
+          start={start}
+          current={current}
+          width={point.getDistanceX(current.x)}
+          height={point.getDistanceY(current.y)}
+          selected={selected}
+          creating={creating}
+          dragging={dragging}
+          onClick={click}
+          onMouseDown={onMouseDown}
+          onMouseUp={onMouseUp}
+        >
+          {children}
+        </Circle>,
     }[shapeType]
   );
 };

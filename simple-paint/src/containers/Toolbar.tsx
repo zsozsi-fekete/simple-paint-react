@@ -1,4 +1,4 @@
-import { faInfoCircle, faSlash, faSquare } from '@fortawesome/free-solid-svg-icons';
+import { faCircle, faInfoCircle, faSlash, faSquare } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { FC, useCallback } from 'react';
 import styled from 'styled-components';
@@ -84,6 +84,7 @@ const Toolbar: FC = () => {
             {
               [ShapeType.LINE]: <FontAwesomeIcon icon={faSlash} style={iconStyle} />,
               [ShapeType.RECTANGLE]: <FontAwesomeIcon icon={faSquare} style={iconStyle} />,
+              [ShapeType.CIRCLE]: <FontAwesomeIcon icon={faCircle} style={iconStyle} />,
             }[ShapeType[s as keyof typeof ShapeType]]
           }
         </ToolbarItemContainer>

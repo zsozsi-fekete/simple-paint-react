@@ -6,19 +6,18 @@ export enum Direction {
   TOP_LEFT = 'Top Left',
   BOTTOM_RIGHT = 'Bottom Right',
   BOTTOM_LEFT = 'Bottom Left',
-
 }
 
 const getCursor = (dir: Direction): string => {
   switch (dir) {
     case Direction.TOP_LEFT:
-      return 'se-resize';
-    case Direction.TOP_RIGHT:
-      return 'sw-resize';
-    case Direction.BOTTOM_LEFT:
-      return 'ne-resize';
-    case Direction.BOTTOM_RIGHT:
       return 'nw-resize';
+    case Direction.TOP_RIGHT:
+      return 'ne-resize';
+    case Direction.BOTTOM_LEFT:
+      return 'sw-resize';
+    case Direction.BOTTOM_RIGHT:
+      return 'se-resize';
     default:
       return 'grab';
   }

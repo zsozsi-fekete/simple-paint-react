@@ -3,6 +3,7 @@ import { IPoint } from './Point';
 export enum ShapeType {
   LINE = 'Line',
   RECTANGLE = 'Rectangle',
+  CIRCLE = 'Circle',
 }
 
 export interface IDimensions {
