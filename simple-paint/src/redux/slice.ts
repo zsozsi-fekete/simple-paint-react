@@ -50,7 +50,7 @@ const slice = createSlice({
       state.selectedShape = state.shapes.find(s => s.id === action.payload);
       state.shapes = state.shapes.filter(s => s.id !== action.payload);
     },
-    deselectShape: (state) => {
+    clearSelectedShape: (state) => {
       if (state.selectedShape) {
         state.shapes.push(state.selectedShape);
       }
@@ -65,5 +65,5 @@ const slice = createSlice({
   }
 });
 
-export const { selectShapeType, addShape, selectShape, deselectShape, deleteShape, updateSelectedShape } = slice.actions;
+export const { selectShapeType, addShape, selectShape, clearSelectedShape, deleteShape, updateSelectedShape } = slice.actions;
 export const rootReducer = slice.reducer;

@@ -10,7 +10,7 @@ import { Line } from '../presenters/Line';
 import { MidPoint } from '../presenters/MidPoint';
 import { Rectangle } from '../presenters/Rectangle';
 import { useAppDispatch } from '../redux/hooks';
-import { deselectShape, selectShape } from '../redux/slice';
+import { clearSelectedShape, selectShape } from '../redux/slice';
 
 export interface IShapeContainerProps extends IDimensions {
   id: string;
@@ -25,7 +25,7 @@ const ShapeContainer: FC<IShapeContainerProps> = (props) => {
   const { id, shapeType, start, current, selected, creating, shape, setShape } = props;
   const [dragging, dragDown, dragUp] = useShapeDragging(shape, setShape);
   const [resizing, resizeDown, resizeUp] = useShapeResizing(shape, setShape);
-  useKeyboardEvents(selected, creating);
+  useKeyboardEvents(selected, creating, dragging, resizing);
   useShapeDeselect(selected, creating, dragging, resizing);
   const dispatch = useAppDispatch();
   const point = new Point(start.x, start.y);
@@ -41,7 +41,7 @@ const ShapeContainer: FC<IShapeContainerProps> = (props) => {
     event.stopPropagation();
     event.preventDefault();
 
-    if (selected) dispatch(deselectShape());
+    if (selected) dispatch(clearSelectedShape());
   };
 
   const onMouseUp = (event: React.MouseEvent<HTMLDivElement>) => {

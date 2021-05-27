@@ -1,6 +1,6 @@
 import { useCallback, useEffect } from 'react';
 import { useAppDispatch } from '../redux/hooks';
-import { deselectShape } from '../redux/slice';
+import { clearSelectedShape } from '../redux/slice';
 
 export const useShapeDeselect = (selected: boolean | undefined, creating: boolean | undefined, dragging: boolean | undefined, resizing: boolean | undefined): void => {
   const dispatch = useAppDispatch();
@@ -10,7 +10,7 @@ export const useShapeDeselect = (selected: boolean | undefined, creating: boolea
       ev.stopImmediatePropagation();
       ev.preventDefault();
       if (!selected) return;
-      dispatch(deselectShape());
+      dispatch(clearSelectedShape());
     },
     [dispatch, selected]
   );

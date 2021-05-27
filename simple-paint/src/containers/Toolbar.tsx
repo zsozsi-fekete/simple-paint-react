@@ -11,25 +11,27 @@ import { selectShapeType } from '../redux/slice';
 const InfoContainer = styled.div`
   position: relative;
   margin-top: auto;
-  background-color: white;
+  background-color: #0d3f33;
   height: 2rem;
   display: flex;
   justify-content: center;
   align-items: center;
+  cursor: help;
 `;
 
 const InfoContentContainer = styled.div`
   visibility: hidden;
   ${InfoContainer}:hover & {
-      visibility: visible;
+    visibility: visible;
   }
-  background-color: whitesmoke;
+  background-color: #1dd1a1;
   position: absolute;
   bottom: 0px;
   left: 80px;
   width: max-content;
   padding: 10px 15px 10px 25px;
   z-index: 1;
+  border: 3px solid white;
 `;
 
 const UList = styled.ul`
@@ -53,6 +55,10 @@ const ToolbarItemContainer = styled.div<{ isSelected: boolean }>`
 
 const iconStyle = {
   color: '#0d3f33',
+};
+
+const infoStyle = {
+  color: 'white',
 };
 
 const Toolbar: FC = () => {
@@ -83,7 +89,7 @@ const Toolbar: FC = () => {
         </ToolbarItemContainer>
       )}
       <InfoContainer>
-        <FontAwesomeIcon icon={faInfoCircle} style={iconStyle} />
+        <FontAwesomeIcon icon={faInfoCircle} style={infoStyle} />
         <InfoContentContainer>
           <UList>
             <ListItem>Click and Drag to create</ListItem>
@@ -93,12 +99,12 @@ const Toolbar: FC = () => {
               <ListItem>Middle Point to drag</ListItem>
               <ListItem>Corner Points to resize</ListItem>
               <ListItem>Delete key to delete</ListItem>
-              <ListItem>To deselect: </ListItem>
-              <UList>
-                <ListItem>Click on it</ListItem>
-                <ListItem>Right Click</ListItem>
-                <ListItem>Escape key</ListItem>
-              </UList>
+            </UList>
+            <ListItem>To deselect: </ListItem>
+            <UList>
+              <ListItem>Click on it</ListItem>
+              <ListItem>Right Click</ListItem>
+              <ListItem>Escape key</ListItem>
             </UList>
           </UList>
         </InfoContentContainer>
